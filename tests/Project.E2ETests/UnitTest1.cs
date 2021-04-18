@@ -122,7 +122,36 @@ namespace Project.E2ETests
     [Fact]
     public void XPathLocation()
     {
+      var url = "https://www.ultimateqa.com/simple-html-elements-for-automation/";
+      Driver.Navigate().GoToUrl(url);
 
+      //click any radio button
+      var radioBtn = Driver.FindElement(By.XPath("//*[@type='radio'][@value='male']"));
+      radioBtn.Click();
+
+      //select one checkbox
+      var checkBox = Driver.FindElement(By.XPath("//*[@value='Bike']"));
+      checkBox.Click();
+
+      //select Audi from the dropdown
+      Driver.FindElement(By.TagName("select")).Click();
+      Driver.FindElement(By.XPath("//*[@value='audi']")).Click();
+
+      //open Tab2 and assert that it is opened.
+      //Hint, use .Text property when you find the element
+      Driver.FindElement(By.XPath("//li[@class='et_pb_tab_1']")).Click();
+      //WebDriverWait wait = new WebDriverWait(Driver, TimeSpan.FromSeconds(3));
+      //wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("//*[@class='et_pb_tab et_pb_tab_1 clearfix et-pb-active-slide']")));
+      Assert.Equal("Tab 1 content",
+        Driver.FindElement(By.XPath("//*[@class='et_pb_tab et_pb_tab_1 clearfix et-pb-active-slide']")).Text);
+      //in the HTML Table with id, highlight one of the salary cells
+      HighlightElementUsingJavaScript(By.XPath("//td[contains(text(),'$150,000+')]"));
+
+      //Highlight the center section called "Highlight me", but you can only
+      //highlight the highest level div for that element. The top parent div.
+      //Hint, this is the class - 
+      //et_pb_column et_pb_column_1_3  et_pb_column_10 et_pb_css_mix_blend_mode_passthrough
+      HighlightElementUsingJavaScript(By.XPath("//*[@class='et_pb_column et_pb_column_1_3 et_pb_column_10  et_pb_css_mix_blend_mode_passthrough']"));
     }
   }
 }
